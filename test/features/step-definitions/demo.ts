@@ -23,8 +23,22 @@ Then(`Click on the first search result`, async function () {
     await ele.click()
 })
 
-Then(/^URL should match (.*)$/,async function (expectedUrl) {
-    console.log('expectedUrl:',expectedUrl);
+Then(/^URL should match (.*)$/, async function (expectedUrl) {
+    console.log('expectedUrl:', expectedUrl);
     let url = await browser.getUrl()
-    expect(url).to.equal(expectedUrl)    
+    expect(url).to.equal(expectedUrl)
+})
+
+Given(/^A web page is opened/, async function () {
+    await browser.url("/inputs")
+    await browser.setTimeout({ implicit: 15000, pageLoad: 10000 })
+    await browser.maximizeWindow()
+})
+
+When('Perform web interactions', async function () {
+
+    let ele = await $('input[type=number]')
+    await ele.setValue('12345')
+    await browser.pause(3000)
+
 })
